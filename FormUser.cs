@@ -20,6 +20,8 @@ namespace АИС_Автосалон
         // Создание словаря для хранения данных о авторизированном пользователе
         Dictionary<string, string> DataUser = new Dictionary<string, string>();
 
+        string print_string = "";
+
         // Переменная для подключения к БД
         string connectString = "Data Source=" + Properties.Resources.database + ";Version=3;";
         // Объявления класса для удобной работы с БД
@@ -651,6 +653,14 @@ namespace АИС_Автосалон
                 }
                 // Получаем текущую дату
                 DateTime dateTime = DateTime.UtcNow.Date;
+
+                print_string = $"ФИО: {bigTextBox1.Text}\nПаспорт: {bigTextBox2.Text}\nВремя: {dateTime.ToString("dd/MM/yyyy")}";
+
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+
                 //Формируем запрос
                 string query = string.Format(
                     "INSERT INTO sales (car_id, name, passport, date_time, user_id) VALUES ({0}, '{1}', '{2}', '{3}', {4})",
@@ -679,6 +689,11 @@ namespace АИС_Автосалон
             {
                 sqlite.error(ex.Message);
             }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            e.Graphics.DrawString(print_string, new Font("Arial", 14), Brushes.Black, 0, 0);
         }
     }
 

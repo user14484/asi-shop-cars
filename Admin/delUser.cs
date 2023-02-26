@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -74,7 +74,7 @@ namespace АИС_Автосалон.Admin
             try
             {
                 string quary = string.Format(
-                    "DELETE FROM Пользователи WHERE Код={0}",
+                    "DELETE FROM users WHERE id={0}",
                     get_selected_id(crownComboBox1)
                     );
                 sqlite.Quary(quary);
